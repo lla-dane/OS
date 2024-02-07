@@ -1,9 +1,9 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h> // Include time.h for clock()
+#include <sys/time.h> // Include time.h for clock()
 
-#define SIZE 10 // Size of the matrices
+#define SIZE 5000 // Size of the matrices
 
 int A[SIZE][SIZE];
 int B[SIZE][SIZE];
@@ -57,10 +57,10 @@ int main() {
     int rowsPerThread = SIZE / numThreads;
     int extraRows = SIZE % numThreads;
 
-    clock_t start, end; // Variables to store start and end times
-    double cpu_time_used;
+    struct timeval start, end;
+    double time_taken;
 
-    start = clock(); // Get start time
+    gettimeofday(&start, NULL);
 
     for (int i = 0; i < numThreads; ++i) {
         data[i].startRow = i * rowsPerThread;
@@ -72,14 +72,17 @@ int main() {
         pthread_join(threads[i], NULL);
     }
 
-    end = clock(); // Get end time
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC; // Calculate the elapsed time
+    gettimeofday(&end, NULL);
 
-    printf("Matrix multiplication took %f seconds to execute.\n", cpu_time_used);
+    time_taken = (end.tv_sec - start.tv_sec) * 1e6;
+    time_taken = (time_taken + (end.tv_usec - start.tv_usec)) * 1e-6;
+
+
+    printf("Matrix multiplication took %f seconds to execute.\n", time_taken);
 
     // Optionally print a portion of the result matrix
-    printf("Portion of Matrix C:\n");
-    printMatrixPortion(C, 0, SIZE, 0, SIZE); 
+    // printf("Portion of Matrix C:\n");
+    // printMatrixPortion(C, 0, SIZE, 0, SIZE); 
 
     return 0;
 }
