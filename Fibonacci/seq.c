@@ -44,6 +44,7 @@ int main() {
             continue;
         }
 
+        printf("%ld ", thread );
         // Wait for the created thread to complete
         pthread_join(thread, NULL);
     }

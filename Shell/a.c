@@ -109,8 +109,6 @@ int main()
                         break;
                 }
                 int ind = 0, i = 0, fd[2], saved_fds[2], io[2] = {-1, -1};
-                saved_fds[0] = dup(STDIN_FILENO);
-                saved_fds[1] = dup(STDOUT_FILENO);
 
                 // adding command to H.
                 for (int search = 0; search < NO_OF_USED_COMMANDS; search++)
