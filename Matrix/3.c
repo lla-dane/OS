@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <sys/time.h> // Include time.h for clock()
 
-#define SIZE 5000 // Size of the matrices
+#define SIZE 2500 // Size of the matrices
 
 int A[SIZE][SIZE];
 int B[SIZE][SIZE];
